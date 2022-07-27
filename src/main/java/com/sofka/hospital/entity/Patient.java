@@ -34,8 +34,11 @@ public class Patient {
     @Column(name = "pat_dni", nullable = false)
     private Long dni;
 
-    @Column(name = "pat_number_of_apointments")
-    private Long numberOfApointments;
+    @Column(name = "pat_dates_of_appointments")
+    private String datesOfAppointments;
+
+    @Column(name = "pat_number_of_appointments")
+    private Long numberOfAppointments;
 
     private Long fkSpecialityId;
 
@@ -44,11 +47,11 @@ public class Patient {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Patient patient = (Patient) o;
-        return age == patient.age && Objects.equals(id, patient.id) && Objects.equals(name, patient.name) && Objects.equals(dni, patient.dni) && Objects.equals(numberOfApointments, patient.numberOfApointments) && Objects.equals(fkSpecialityId, patient.fkSpecialityId);
+        return age == patient.age && Objects.equals(id, patient.id) && Objects.equals(name, patient.name) && Objects.equals(dni, patient.dni) && Objects.equals(numberOfAppointments, patient.numberOfAppointments) && Objects.equals(fkSpecialityId, patient.fkSpecialityId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, age, dni, numberOfApointments, fkSpecialityId);
+        return Objects.hash(id, name, age, dni, numberOfAppointments, fkSpecialityId);
     }
 }
