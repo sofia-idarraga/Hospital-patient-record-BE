@@ -1,41 +1,36 @@
 package com.sofka.hospital.controller;
 
 import com.sofka.hospital.dto.MedicalSpecialityDTO;
+import com.sofka.hospital.dto.PatientDTO;
+import com.sofka.hospital.entity.Patient;
 import com.sofka.hospital.services.MedicalSpecialityService;
+import com.sofka.hospital.services.PatientService;
 import com.sofka.hospital.utility.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.ConstraintViolationException;
-import java.util.List;
 
 @RestController
 @RequestMapping("api/")
-public class MedicalSpecialityController {
+public class PatientController {
 
     @Autowired
-    private MedicalSpecialityService medicalSpecialityService;
+    private PatientService patientService;
 
     private Response response = new Response();
     private HttpStatus httpStatus = HttpStatus.OK;
 
-    @GetMapping("speciality")
-    public List<MedicalSpecialityDTO> getAllSpecialities(){
-        return medicalSpecialityService.getAllSpeciality();
-    }
-
-    @PostMapping("create/speciality")
-    public ResponseEntity<Response> createSpeciality(@RequestBody MedicalSpecialityDTO medicalSpecialityDTO){
+    @PostMapping("create/patient")
+    public ResponseEntity<Response> createPatient(@RequestBody PatientDTO patientDTO){
         response.restart();
         try {
-            response.data = medicalSpecialityService.createSpeciality(medicalSpecialityDTO);
+            response.data = patientService.createPatient(patientDTO);
             httpStatus = HttpStatus.CREATED;
         } catch (ConstraintViolationException exception){
             response.data = exception.getCause();
@@ -45,5 +40,4 @@ public class MedicalSpecialityController {
         }
         return new ResponseEntity(response, httpStatus);
     }
-
 }

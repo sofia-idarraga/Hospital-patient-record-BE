@@ -8,5 +8,6 @@ public class PatientDTO {
     private int age;
     private Long dni;
     private String datesOfAppointments;
+    private Long fkSpecialityId;
 
 }

@@ -41,6 +41,7 @@ public class MedicalSpecialityService implements IMedicalSpecialityService {
         patientDTO.setAge(patient.getAge());
         patientDTO.setDni(patient.getDni());
         patientDTO.setDatesOfAppointments(patient.getDatesOfAppointments());
+        patientDTO.setFkSpecialityId(patient.getFkSpecialityId());
         return patientDTO;
     }
 
