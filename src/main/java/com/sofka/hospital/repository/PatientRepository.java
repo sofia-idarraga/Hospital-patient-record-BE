@@ -18,11 +18,12 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     );
 
     @Modifying
-    @Query("UPDATE Patient pat SET pat.datesOfAppointments = :datesOfAppointments " +
+    @Query("UPDATE Patient pat SET pat.datesOfAppointments = :datesOfAppointments, pat.numberOfAppointments = :numberOfAppointments " +
             "WHERE pat.id = :id")
     void updateDate(
             @Param(value = "id") Long id,
-            @Param(value = "datesOfAppointments") String datesOfAppointments
+            @Param(value = "datesOfAppointments") String datesOfAppointments,
+            @Param(value = "numberOfAppointments") Long numberOfAppointments
     );
 
 }

@@ -26,6 +26,7 @@ public class PatientService implements IPatientService {
                 .findById(patientDTO.getFkSpecialityId()).get();
         Patient patient = convertDTOToPatient(patientDTO);
         medicalSpeciality.addPatient(patient);
+        patient.setNumberOfAppointments(1L);
         patientRepository.save(patient);
         return convertPatientToDTO(patient);
     }
@@ -35,7 +36,8 @@ public class PatientService implements IPatientService {
         Patient patient = patientRepository.findByDni(patientDTO.getDni(), patientDTO.getFkSpecialityId());
         String date = patient.getDatesOfAppointments();
         String newDate = date.concat("-").concat(patientDTO.getDatesOfAppointments());
-        patientRepository.updateDate(patient.getId(), newDate);
+        Long numberOfAppointment = patient.getNumberOfAppointments() + 1L;
+        patientRepository.updateDate(patient.getId(), newDate, numberOfAppointment);
     }
 
 

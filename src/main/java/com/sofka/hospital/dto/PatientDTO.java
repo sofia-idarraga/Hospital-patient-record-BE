@@ -9,5 +9,4 @@ public class PatientDTO {
     private Long dni;
     private String datesOfAppointments;
     private Long fkSpecialityId;
-
 }
