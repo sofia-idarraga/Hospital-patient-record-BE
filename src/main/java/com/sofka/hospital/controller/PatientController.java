@@ -1,15 +1,13 @@
 package com.sofka.hospital.controller;
 
-import com.sofka.hospital.dto.MedicalSpecialityDTO;
 import com.sofka.hospital.dto.PatientDTO;
-import com.sofka.hospital.entity.Patient;
-import com.sofka.hospital.services.MedicalSpecialityService;
 import com.sofka.hospital.services.PatientService;
 import com.sofka.hospital.utility.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,4 +55,23 @@ public class PatientController {
         }
         return new ResponseEntity(response, httpStatus);
     }
+
+
+    @PatchMapping(path = "update/date/patient")
+    public ResponseEntity<Response> updateDate(@RequestBody PatientDTO patientDTO){
+        response.restart();
+        try {
+            patientService.updateDate(patientDTO);
+            response.data = patientDTO;
+            response.message = "successfully updated";
+            httpStatus = HttpStatus.OK;
+        } catch(Exception exception){
+            response.data = exception.getCause();
+            response.message = exception.getMessage();
+            response.error = true;
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity(response, httpStatus);
+    }
+
 }

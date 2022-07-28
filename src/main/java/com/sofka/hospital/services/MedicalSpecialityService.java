@@ -7,6 +7,7 @@ import com.sofka.hospital.repository.MedicalSpecialityRepository;
 import com.sofka.hospital.services.interfaces.IMedicalSpecialityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,16 @@ public class MedicalSpecialityService implements IMedicalSpecialityService {
         return true;
         }
     return false;
+    }
+
+    @Transactional
+    public void updateName(Long id, String name){
+        medicalSpecialityRepository.updateName(id, name);
+    }
+
+    @Transactional
+    public void updateSpeciality(Long id, String name, String physicianInCharge){
+        medicalSpecialityRepository.updateMedicalSpeciality(id, name, physicianInCharge);
     }
 
 

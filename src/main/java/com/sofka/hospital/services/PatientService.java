@@ -8,6 +8,7 @@ import com.sofka.hospital.repository.PatientRepository;
 import com.sofka.hospital.services.interfaces.IPatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PatientService implements IPatientService {
@@ -17,6 +18,7 @@ public class PatientService implements IPatientService {
 
     @Autowired
     MedicalSpecialityRepository medicalSpecialityRepository;
+
 
     @Override
     public PatientDTO createPatient(PatientDTO patientDTO){
@@ -28,11 +30,20 @@ public class PatientService implements IPatientService {
         return convertPatientToDTO(patient);
     }
 
+    @Transactional
+    public void updateDate(PatientDTO patientDTO){
+        Patient patient = patientRepository.findByDni(patientDTO.getDni(), patientDTO.getFkSpecialityId());
+        String date = patient.getDatesOfAppointments();
+        String newDate = date.concat("-").concat(patientDTO.getDatesOfAppointments());
+        patientRepository.updateDate(patient.getId(), newDate);
+    }
+
+
     @Override
     public boolean deletePatient(PatientDTO patientDTO){
         MedicalSpeciality medicalSpeciality = medicalSpecialityRepository
                 .findById(patientDTO.getFkSpecialityId()).get();
-        Patient patient = patientRepository.findByDni(patientDTO.getDni());
+        Patient patient = patientRepository.findByDni(patientDTO.getDni(),patientDTO.getFkSpecialityId() );
         medicalSpeciality.removePatient(patient);
         medicalSpecialityRepository.save(medicalSpeciality);
         patientRepository.deleteById(patient.getId());

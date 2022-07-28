@@ -4,11 +4,14 @@ import com.sofka.hospital.dto.MedicalSpecialityDTO;
 import com.sofka.hospital.services.MedicalSpecialityService;
 import com.sofka.hospital.utility.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,5 +65,42 @@ public class MedicalSpecialityController {
         }
         return new ResponseEntity(response, httpStatus);
     }
+
+    @PatchMapping(path = "update/name/speciality")
+    public ResponseEntity<Response> updateName(@RequestBody MedicalSpecialityDTO medicalSpecialityDTO){
+        response.restart();
+        try {
+           medicalSpecialityService.updateName(medicalSpecialityDTO.getSpecialityId(), medicalSpecialityDTO.getName());
+           response.data = medicalSpecialityDTO.getName();
+           response.message = "successfully updated";
+           httpStatus = HttpStatus.OK;
+       } catch(Exception exception){
+           response.data = exception.getCause();
+           response.message = exception.getMessage();
+           response.error = true;
+           httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+       }
+        return new ResponseEntity(response, httpStatus);
+    }
+
+    @PutMapping(path = "update/speciality")
+    public ResponseEntity<Response> updateSpeciality(@RequestBody MedicalSpecialityDTO medicalSpecialityDTO){
+        response.restart();
+        try {
+            medicalSpecialityService.updateSpeciality(medicalSpecialityDTO.getSpecialityId(),
+                    medicalSpecialityDTO.getName(), medicalSpecialityDTO.getPhysicianInCharge());
+            response.data = medicalSpecialityDTO;
+            response.message = "successfully updated";
+            httpStatus = HttpStatus.OK;
+        } catch(Exception exception){
+            response.data = exception.getCause();
+            response.message = exception.getMessage();
+            response.error = true;
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity(response, httpStatus);
+    }
+
+
 
 }
