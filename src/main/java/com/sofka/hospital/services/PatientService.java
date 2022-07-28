@@ -18,6 +18,7 @@ public class PatientService implements IPatientService {
     @Autowired
     MedicalSpecialityRepository medicalSpecialityRepository;
 
+    @Override
     public PatientDTO createPatient(PatientDTO patientDTO){
         MedicalSpeciality medicalSpeciality = medicalSpecialityRepository
                 .findById(patientDTO.getFkSpecialityId()).get();

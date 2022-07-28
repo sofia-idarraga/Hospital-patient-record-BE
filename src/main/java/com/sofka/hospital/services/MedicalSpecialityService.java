@@ -34,6 +34,16 @@ public class MedicalSpecialityService implements IMedicalSpecialityService {
         return convertSpecialityToDTO(medicalSpecialityRepository.save(medicalSpeciality));
     }
 
+    @Override
+    public boolean deleteSpeciality(MedicalSpecialityDTO medicalSpecialityDTO){
+    MedicalSpeciality medicalSpeciality = medicalSpecialityRepository.findById(medicalSpecialityDTO.getSpecialityId()).get();
+    if(medicalSpeciality.getPatients().size() == 0){
+        medicalSpecialityRepository.deleteById(medicalSpeciality.getId());
+        return true;
+        }
+    return false;
+    }
+
 
     private PatientDTO convertPatientToDTO(Patient patient){
         PatientDTO patientDTO = new PatientDTO();
