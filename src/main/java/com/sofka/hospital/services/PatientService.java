@@ -22,10 +22,21 @@ public class PatientService implements IPatientService {
     public PatientDTO createPatient(PatientDTO patientDTO){
         MedicalSpeciality medicalSpeciality = medicalSpecialityRepository
                 .findById(patientDTO.getFkSpecialityId()).get();
-        medicalSpeciality.addPatient(convertDTOToPatient(patientDTO));
         Patient patient = convertDTOToPatient(patientDTO);
+        medicalSpeciality.addPatient(patient);
         patientRepository.save(patient);
         return convertPatientToDTO(patient);
+    }
+
+    @Override
+    public boolean deletePatient(PatientDTO patientDTO){
+        MedicalSpeciality medicalSpeciality = medicalSpecialityRepository
+                .findById(patientDTO.getFkSpecialityId()).get();
+        Patient patient = patientRepository.findByDni(patientDTO.getDni());
+        medicalSpeciality.removePatient(patient);
+        medicalSpecialityRepository.save(medicalSpeciality);
+        patientRepository.deleteById(patient.getId());
+        return true;
     }
     private PatientDTO convertPatientToDTO(Patient patient){
         PatientDTO patientDTO = new PatientDTO();

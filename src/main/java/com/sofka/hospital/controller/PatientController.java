@@ -9,6 +9,7 @@ import com.sofka.hospital.utility.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,22 @@ public class PatientController {
             response.message = exception.getMessage();
             response.error = true;
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity(response, httpStatus);
+    }
+
+    @DeleteMapping("delete/patient")
+    public ResponseEntity<Response> deletePatient(@RequestBody PatientDTO patientDTO){
+        response.restart();
+        boolean state = patientService.deletePatient(patientDTO);
+        if (state){
+            response.data = patientDTO;
+            response.message = "successfully deleted";
+            httpStatus = HttpStatus.OK;
+        }else {
+            response.data = patientDTO;
+            response.message = "Cannot be deleted";
+            httpStatus = HttpStatus.BAD_REQUEST;
         }
         return new ResponseEntity(response, httpStatus);
     }

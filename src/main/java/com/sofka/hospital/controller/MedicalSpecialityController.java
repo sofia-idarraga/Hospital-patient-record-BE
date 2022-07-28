@@ -4,7 +4,6 @@ import com.sofka.hospital.dto.MedicalSpecialityDTO;
 import com.sofka.hospital.services.MedicalSpecialityService;
 import com.sofka.hospital.utility.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

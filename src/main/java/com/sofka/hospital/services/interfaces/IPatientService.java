@@ -6,4 +6,5 @@ public interface IPatientService {
 
     PatientDTO createPatient(PatientDTO patientDTO);
 
+    boolean deletePatient(PatientDTO patientDTO);
 }
