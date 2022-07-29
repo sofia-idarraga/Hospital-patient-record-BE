@@ -3,8 +3,9 @@
 ## _Hospital patient record - Back End_
 ### _By: Sofía Idárraga_
 
-Saint Claire is a hospital that needs to hold in an organized manner the records of their patients.
+
 ---
+Saint Claire is a hospital that needs to hold in an organized manner the records of their patients.
 
 - This Backend were created with Spring Boot
 
