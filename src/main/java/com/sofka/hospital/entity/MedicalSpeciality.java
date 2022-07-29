@@ -25,7 +25,7 @@ public class MedicalSpeciality {
     @Column(name = "sp_id", nullable = false)
     private Long id;
 
-    @Column(name = "sp_name", nullable = false, length = 100)
+    @Column(name = "sp_name", nullable = false, length = 100, unique=true)
     @Size(min = 5, max = 100,message="criteria not met")
     private String name;
 
